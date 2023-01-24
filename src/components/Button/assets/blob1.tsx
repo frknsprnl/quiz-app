@@ -6,7 +6,7 @@ function blob1() {
       <svg
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
-        className={`opacity-10 absolute w-32 -bottom-1 -right-8 animate-wiggle pointer-events-none`}
+        className={`opacity-20 absolute w-20 -bottom-1 -right-4 animate-wiggle pointer-events-none`}
       >
         <path
           fill="#fff"

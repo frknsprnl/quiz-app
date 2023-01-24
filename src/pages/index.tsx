@@ -1,7 +1,5 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
 import Header from "@/components/Header";
-import { Fira_Sans } from "@next/font/google";
 import Blob from "../assets/blob";
 import TestImg from "../assets/test.png";
 import Image from "next/image";
@@ -10,11 +8,6 @@ import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import WorldImage from "../components/CategoryCard/assets/world.png";
 import ScienceImage from "../components/CategoryCard/assets/science.png";
 import BookImage from "../components/CategoryCard/assets/books.png";
-
-const firaSans = Fira_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export default function Home() {
   function handleScroll(screenId: any) {
@@ -34,7 +27,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className={`${styles.main} ${firaSans.className}`}>
+      <main>
         <div className="flex flex-col lg:flex-row justify-around py-0 lg:py-12">
           <div className="flex order-2 lg:order-1">
             <h1 className="text-lg text-center md:text-2xl lg:text-3xl w-full lg:w-5/6 m-auto py-2">
@@ -58,7 +51,7 @@ export default function Home() {
           </button>
         </div>
         <div className="h-screen pt-12 md:pt-20" id="screen2">
-          <h1 className="text-3xl md:text-4xl py-4">Popular Categories</h1>
+          <h1 className="text-3xl md:text-4xl py-4 md:py-0">Popular Categories</h1>
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 py-4 md:py-20 md:gap-8">
             <CategoryCard
               name="Countries"

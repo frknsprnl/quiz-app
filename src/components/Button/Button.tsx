@@ -2,9 +2,10 @@ import { MouseEvent } from "react";
 import Blob1 from "./assets/blob1";
 import Blob2 from "./assets/blob2";
 import Blob3 from "./assets/blob3";
+import Blob4 from "./assets/blob4";
 import Color from 'color';
 
-const Button: React.FC<{ color: string }> = ({ color, ...props }) => {
+const Button: React.FC<{ name: string, color: string }> = ({ color, name, ...props }) => {
   return (
     <>
       <button
@@ -20,7 +21,8 @@ const Button: React.FC<{ color: string }> = ({ color, ...props }) => {
         <Blob1 />
         <Blob2 />
         <Blob3 />
-        Next
+        <Blob4 />
+        {name}
       </button>
     </>
   );

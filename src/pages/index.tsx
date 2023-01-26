@@ -27,7 +27,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main>
+      <main className="mt-16 md:mt-20">
         <div className="flex flex-col lg:flex-row justify-around py-0 lg:py-12">
           <div className="flex order-2 lg:order-1">
             <h1 className="text-lg text-center md:text-2xl lg:text-3xl w-full lg:w-5/6 m-auto py-2">
@@ -37,7 +37,7 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex w-auto lg:w-[36rem] relative justify-center items-center order-1 lg:order-2 mr-0 lg:mr-20">
-            <Blob className="h-96 lg:h-[30rem] w-96 lg:w-[30rem] m-auto" />
+            <Blob color="#fffafa" className="h-96 lg:h-[30rem] w-96 lg:w-[30rem] m-auto" />
             <Image
               src={TestImg}
               alt="test image"
@@ -47,11 +47,11 @@ export default function Home() {
         </div>
         <div className="flex justify-center mt-4 md:mt-0">
           <button className="p-2 z-10" onClick={() => handleScroll("screen2")}>
-            <AiOutlineArrowDown size={36} className="animate-bounce z-0" />
+            <AiOutlineArrowDown size={36} className="animate-bounce z-0 text-[#fffafa] hover:text-gray-300" />
           </button>
         </div>
         <div className="h-screen pt-12 md:pt-20" id="screen2">
-          <h1 className="text-3xl md:text-4xl py-4 md:py-0">Popular Categories</h1>
+          <h1 className="text-3xl md:text-4xl py-4 md:py-6">Popular Categories</h1>
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 py-4 md:py-20 md:gap-8">
             <CategoryCard
               name="Countries"

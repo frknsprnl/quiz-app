@@ -52,16 +52,6 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  margin-top: 80px;
-}
-
-@media screen and (max-width: 800px) {
-  body {
-    margin-top: 60px;
-  }
-}
-
 a {
   color: inherit;
   text-decoration: none;

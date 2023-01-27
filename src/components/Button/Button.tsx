@@ -9,7 +9,7 @@ const Button: React.FC<{ name: string, color: string }> = ({ color, name, ...pro
   return (
     <>
       <button
-        className={`py-3 px-8 relative rounded-full overflow-hidden font-medium`}
+        className={`py-3 px-8 w-full relative rounded-full overflow-hidden font-medium`}
         style={{ backgroundColor: color }}
         onMouseOver={(e: MouseEvent) => {
           (e.target as HTMLElement).style.backgroundColor = `${Color(color).darken(0.1)}`;

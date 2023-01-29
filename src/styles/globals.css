@@ -4,7 +4,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #1d1f27;
+    --primary: #16161a;
     --primaryDarker: #12161b;
     --secondary: #107eeb;
     --tertiary: #4fd1c5;
@@ -41,6 +41,18 @@
 
   ::-webkit-scrollbar-corner {
     background-color: transparent;
+  }
+
+  h1 {
+    color: #fffffe;
+  }
+
+  button {
+    color: #fffffe;
+  }
+
+  p {
+    color: #94a1b2;
   }
 }
 

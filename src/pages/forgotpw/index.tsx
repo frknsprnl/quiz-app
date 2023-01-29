@@ -26,12 +26,12 @@ function forgotPassword() {
           <h1 className="text-2xl text-center">Forgot Password</h1>
           <div className="flex flex-col gap-3 w-80">
             <Input name="email" placeholder="E-mail" />
-            <Button name="Send" color="#107eeb" />
+            <Button name="Send" color="#7f5af0" />
             <span className="text-center">
               Remember password?{" "}
               <Link
                 href="/login"
-                className="text-[#107eeb] hover:text-blue-600"
+                className="text-[#7f5af0] hover:text-violet-700"
               >
                 Login
               </Link>

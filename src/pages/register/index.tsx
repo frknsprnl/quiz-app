@@ -32,19 +32,19 @@ function Register() {
           alt="blob image"
           className="absolute bottom-0 left-0 -z-40"
         />
-        <div className="flex flex-col gap-3 justify-center items-center p-5 rounded-xl bg-[#1d1f27]">
+        <div className="flex flex-col gap-3 justify-center items-center p-5 rounded-xl bg-[#16161a]">
           <h1 className="text-2xl text-center">Register</h1>
           <div className="flex flex-col gap-3 w-80">
             <Input name="username" placeholder="Username" />
             <Input name="email" placeholder="E-mail" />
             <Input name="password" placeholder="Password" />
             <Input name="rePassword" placeholder="Confirm Password" />
-            <Button name="Sign Up" color="#107eeb" />
+            <Button name="Sign Up" color="#7f5af0" />
             <span className="text-center">
               Already a member?{" "}
               <Link
                 href="/login"
-                className="text-[#107eeb] hover:text-blue-600"
+                className="text-[#7f5af0] hover:text-violet-700"
               >
                 Login
               </Link>

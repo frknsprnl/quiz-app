@@ -5,9 +5,7 @@ import TestImg from "../assets/test.png";
 import Image from "next/image";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
-import WorldImage from "../components/CategoryCard/assets/world.png";
-import ScienceImage from "../components/CategoryCard/assets/science.png";
-import BookImage from "../components/CategoryCard/assets/books.png";
+import QuizCard from "@/components/QuizCard/QuizCard";
 
 export default function Home() {
   function handleScroll(screenId: any) {
@@ -27,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="mt-16 md:mt-20">
+      <main className="pt-16 md:pt-20">
         <div className="flex flex-col lg:flex-row justify-around py-0 lg:py-12">
           <div className="flex order-2 lg:order-1">
             <h1 className="text-lg text-center md:text-2xl lg:text-3xl w-full lg:w-5/6 m-auto py-2">
@@ -37,7 +35,10 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex w-auto lg:w-[36rem] relative justify-center items-center order-1 lg:order-2 mr-0 lg:mr-20">
-            <Blob color="#fffafa" className="h-96 lg:h-[30rem] w-96 lg:w-[30rem] m-auto" />
+            <Blob
+              color="#fffafa"
+              className="h-96 lg:h-[30rem] w-96 lg:w-[30rem] m-auto"
+            />
             <Image
               src={TestImg}
               alt="test image"
@@ -45,32 +46,34 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="flex justify-center mt-4 md:mt-0">
+        <div className="flex justify-center mt-4 md:mt-0" id="screen2">
           <button className="p-2 z-10" onClick={() => handleScroll("screen2")}>
-            <AiOutlineArrowDown size={36} className="animate-bounce z-0 text-[#fffafa] hover:text-gray-300" />
+            <AiOutlineArrowDown
+              size={36}
+              className="animate-bounce z-0 text-[#fffafa] hover:text-gray-300"
+            />
           </button>
         </div>
-        <div className="h-screen pt-12 md:pt-20" id="screen2">
-          <h1 className="text-3xl md:text-4xl py-4 md:py-6">Popular Categories</h1>
-          <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 py-4 md:py-20 md:gap-8">
-            <CategoryCard
-              name="Countries"
-              leftColor="#af88"
-              rightColor="#add"
-              categoryImage={WorldImage}
-            />
-            <CategoryCard
-              name="Science"
-              leftColor="#a22"
-              rightColor="#a0d"
-              categoryImage={ScienceImage}
-            />
-            <CategoryCard
-              name="Books"
-              leftColor="#a08"
-              rightColor="#89e"
-              categoryImage={BookImage}
-            />
+        <div className="min-h-screen pt-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl py-4 md:py-8">
+              Popular Quizzes
+            </h1>
+            <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
+              <QuizCard category="Math" name="Quiz Name" />
+              <QuizCard category="Math" name="Quiz Name" />
+              <QuizCard category="Math" name="Quiz Name" />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-3xl md:text-4xl py-4 md:py-6">
+              Popular Categories
+            </h1>
+            <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-3 md:gap-4">
+              <CategoryCard name="Countries" />
+              <CategoryCard name="Science" />
+              <CategoryCard name="Books" />
+            </div>
           </div>
         </div>
       </main>

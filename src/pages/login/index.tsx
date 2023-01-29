@@ -32,7 +32,7 @@ function Login() {
           alt="blob image"
           className="absolute bottom-0 left-0 -z-40"
         />
-        <div className="flex flex-col gap-3 justify-center items-center p-5 rounded-xl bg-[#1d1f27]">
+        <div className="flex flex-col gap-3 justify-center items-center p-5 rounded-xl bg-[#16161a]">
           <h1 className="text-2xl text-center">Hello Again!</h1>
           <span className="text-lg">Welcome back. You`ve been missed.</span>
           <div className="flex flex-col gap-3 w-80">
@@ -40,16 +40,16 @@ function Login() {
             <Input name="password" placeholder="Password" />
             <Link
               href="/forgotpw"
-              className="ml-auto text-[#107eeb] hover:text-blue-600"
+              className="ml-auto text-[#7f5af0] hover:text-violet-700"
             >
               Forgot password?
             </Link>
-            <Button name="Sign In" color="#107eeb" />
+            <Button name="Sign In" color="#7f5af0" />
             <span className="text-center">
               Not a member?{" "}
               <Link
                 href="/register"
-                className="text-[#107eeb] hover:text-blue-600"
+                className="text-[#7f5af0] hover:text-violet-700"
               >
                 Register Now
               </Link>

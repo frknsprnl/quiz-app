@@ -39,7 +39,7 @@ function UserLayout({ children }: UserLayoutProps) {
           className="block md:flex"
           style={{ height: "calc(100% - 5rem)", marginTop: "5rem" }}
         >
-          <div className="flex flex-row md:flex-col gap-6 md:w-20 lg:w-72 shadow-md md:relative rounded-xl inset-x-0 fixed bottom-0 bg-[#1d1f27]">
+          <div className="flex flex-row md:flex-col gap-6 md:w-20 lg:w-72 shadow-md md:relative rounded-xl inset-x-0 fixed bottom-0 bg-[#16161a]">
             <Link
               href={"/user/leaderboard"}
               className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mt-auto w-full hover:bg-slate-700 rounded-xl"

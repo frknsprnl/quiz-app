@@ -9,7 +9,7 @@ const firaSans = Fira_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`${firaSans.className} font-sans`}>
+    <div className={`${firaSans.className}`}>
       <Component {...pageProps} />
     </div>
   )

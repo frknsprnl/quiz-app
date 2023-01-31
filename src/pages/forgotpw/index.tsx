@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Head from "next/head";
 import Header from "@/components/Header";
 import Input from "@/components/Input/input";
@@ -6,8 +6,28 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import Image from "next/image";
 import WaveImg from "@/assets/wave.svg";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
-function forgotPassword() {
+function ForgotPassword() {
+  const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validateOnChange: validateAfterSubmit,
+    onSubmit: (values, { resetForm }) => {
+      alert(JSON.stringify(values, null, 2));
+      resetForm();
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Must be a valid email.")
+        .required("Email is required."),
+    }),
+  });
   return (
     <>
       <Head>
@@ -20,13 +40,34 @@ function forgotPassword() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="h-screen w-full flex justify-center items-center">
-        <Image src={WaveImg} alt="wave img" className="absolute bottom-0 -z-40" />
+      <main className="h-screen w-full flex justify-center items-center pt-16 md:pt-20">
+        <Image
+          src={WaveImg}
+          alt="wave img"
+          className="absolute bottom-0 md:-bottom-10 -z-40"
+        />
         <div className="flex flex-col gap-3 justify-center items-center">
           <h1 className="text-2xl text-center">Forgot Password</h1>
-          <div className="flex flex-col gap-3 w-80">
-            <Input name="email" placeholder="E-mail" />
-            <Button name="Send" color="#7f5af0" />
+          <form
+            onSubmit={formik.handleSubmit}
+            className="flex flex-col gap-3 w-80"
+            autoComplete="off"
+            noValidate
+          >
+            <div>
+              <ErrorMessage error={formik.errors.email} />
+              <Input
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                placeholder="E-mail"
+              />
+            </div>
+            <Button
+              name="Send"
+              color="#7f5af0"
+              onClick={() => setValidateAfterSubmit(true)}
+            />
             <span className="text-center">
               Remember password?{" "}
               <Link
@@ -36,11 +77,11 @@ function forgotPassword() {
                 Login
               </Link>
             </span>
-          </div>
+          </form>
         </div>
       </main>
     </>
   );
 }
 
-export default forgotPassword;
+export default ForgotPassword;

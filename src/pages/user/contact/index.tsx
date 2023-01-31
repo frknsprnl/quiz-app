@@ -7,7 +7,7 @@ import TextArea from "@/components/TextArea/TextArea";
 function Contact() {
   return (
     <UserLayout>
-      <div className="flex flex-col gap-3 items-center my-5 rounded-xl bg-[#1d1f27]">
+      <div className="flex flex-col gap-3 items-center my-5 rounded-xl bg-[#16161a]">
         <h1 className="text-2xl text-center">Contact Us!</h1>
         <span className="text-base text-center lg:text-lg">
           You can send an email to us whenever you want.

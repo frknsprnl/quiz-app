@@ -54,7 +54,7 @@ export default function Home() {
             />
           </button>
         </div>
-        <div className="min-h-screen pt-4">
+        <div className="min-h-screen pt-6 md:pt-8">
           <div>
             <h1 className="text-3xl md:text-4xl py-4 md:py-8">
               Popular Quizzes

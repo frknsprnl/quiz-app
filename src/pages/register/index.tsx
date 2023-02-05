@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
-import Header from "@/components/Header";
 import Input from "@/components/Input/input";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
@@ -10,24 +9,26 @@ import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import axios from "axios";
+import UnauthenticatedRoute from "@/routes/UnauthenticatedRoute";
 
 function Register() {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      email: "",
+      userName: "",
+      eMail: "",
       password: "",
       confirmPassword: "",
     },
     validateOnChange: validateAfterSubmit,
     validationSchema: Yup.object({
-      username: Yup.string()
+      userName: Yup.string()
         .min(3, "Username must be at least 3 characters long")
         .max(50, "Username must be no more than 50 characters long")
         .required("Username is required"),
-      email: Yup.string()
+      eMail: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string()
@@ -38,12 +39,31 @@ function Register() {
         .required("Confirm password is required"),
     }),
     onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      signUp({
+        userName: values.userName,
+        eMail: values.eMail,
+        password: values.password,
+      });
       resetForm();
     },
   });
+
+  const signUp = async (values: any) => {
+    await axios
+      .post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/UsersContoller/Create`,
+        values
+      )
+      .then((resp) => {
+        console.log(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <>
+    <UnauthenticatedRoute>
       <Head>
         <title>Register | QuizApp</title>
         <meta
@@ -53,15 +73,21 @@ function Register() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <main className="h-screen w-full flex justify-center items-center pt-16 md:pt-20">
+      <main className="h-screen w-full flex justify-center items-center p-0">
+        <Link href={"/"} className="absolute top-10">
+          <h1 className="text-4xl text-[#fffafa] hover:text-gray-300">
+            QuizApp
+          </h1>
+        </Link>
         <Image
           src={blobTop}
+          priority={true}
           alt="blob image"
-          className="absolute top-10 md:top-20 right-0 -z-40"
+          className="absolute -top-10 md:top-0 right-0 -z-40"
         />
         <Image
           src={blobBottom}
+          priority={true}
           alt="blob image"
           className="absolute bottom-0 left-0 -z-40"
         />
@@ -74,20 +100,20 @@ function Register() {
             noValidate
           >
             <div className="flex flex-col">
-              <ErrorMessage error={formik.errors.username} />
+              <ErrorMessage error={formik.errors.userName} />
               <Input
-                name="username"
+                name="userName"
                 onChange={formik.handleChange}
-                value={formik.values.username}
+                value={formik.values.userName}
                 placeholder="Username"
               />
             </div>
             <div className="flex flex-col">
-              <ErrorMessage error={formik.errors.email} />
+              <ErrorMessage error={formik.errors.eMail} />
               <Input
-                name="email"
+                name="eMail"
                 onChange={formik.handleChange}
-                value={formik.values.email}
+                value={formik.values.eMail}
                 type="email"
                 placeholder="E-mail"
               />
@@ -129,7 +155,7 @@ function Register() {
           </form>
         </div>
       </main>
-    </>
+    </UnauthenticatedRoute>
   );
 }
 

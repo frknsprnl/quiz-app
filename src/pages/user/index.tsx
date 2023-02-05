@@ -8,6 +8,7 @@ import Image from "next/image";
 import ProfileImg from "@/assets/profile.png";
 import Link from "next/link";
 import Router from "next/router";
+import AuthenticatedRoute from "@/routes/AuthenticatedRoute";
 
 type UserLayoutProps = {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ function UserLayout({ children }: UserLayoutProps) {
   }, []);
 
   return (
-    <>
+    <AuthenticatedRoute>
       <Head>
         <title>User | QuizApp</title>
         <meta
@@ -78,7 +79,7 @@ function UserLayout({ children }: UserLayoutProps) {
           <div className="md:p-4 lg:p-10 w-full">{children}</div>
         </div>
       </main>
-    </>
+    </AuthenticatedRoute>
   );
 }
 

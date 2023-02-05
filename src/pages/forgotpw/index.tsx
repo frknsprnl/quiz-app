@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Head from "next/head";
-import Header from "@/components/Header";
 import Input from "@/components/Input/input";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
@@ -9,6 +8,7 @@ import WaveImg from "@/assets/wave.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import UnauthenticatedRoute from "@/routes/UnauthenticatedRoute";
 
 function ForgotPassword() {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
@@ -29,7 +29,7 @@ function ForgotPassword() {
     }),
   });
   return (
-    <>
+    <UnauthenticatedRoute>
       <Head>
         <title>Forgot Password | QuizApp</title>
         <meta
@@ -39,12 +39,17 @@ function ForgotPassword() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <main className="h-screen w-full flex justify-center items-center pt-16 md:pt-20">
+      <main className="h-screen max-h-screen w-full flex justify-center items-center p-0">
+        <Link href={"/"} className="absolute top-10">
+          <h1 className="text-4xl text-[#fffafa] hover:text-gray-300">
+            QuizApp
+          </h1>
+        </Link>
         <Image
           src={WaveImg}
+          priority={true}
           alt="wave img"
-          className="absolute bottom-0 md:-bottom-10 -z-40"
+          className="absolute bottom-0 -z-40"
         />
         <div className="flex flex-col gap-3 justify-center items-center">
           <h1 className="text-2xl text-center">Forgot Password</h1>
@@ -80,7 +85,7 @@ function ForgotPassword() {
           </form>
         </div>
       </main>
-    </>
+    </UnauthenticatedRoute>
   );
 }
 

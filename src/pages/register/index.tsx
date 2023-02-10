@@ -51,7 +51,7 @@ function Register() {
   const signUp = async (values: any) => {
     await axios
       .post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/UsersContoller/Create`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/Users/Create`,
         values
       )
       .then((resp) => {

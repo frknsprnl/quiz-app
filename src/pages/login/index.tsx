@@ -10,7 +10,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useAuth } from "@/context/UserContext";
 import UnauthenticatedRoute from "@/routes/UnauthenticatedRoute";
 
@@ -20,8 +19,6 @@ function Login() {
   const [errorAfterSubmit, setErrorAfterSubmit] = useState(errInitialValues);
   const [isFirstLogin, setIsFirstLogin] = useState<boolean | null>(null);
   const { login } = useAuth();
-  const router = useRouter();
-  
 
   useEffect(() => {
     const storedValue = localStorage.getItem("isFirstLogin");
@@ -53,7 +50,7 @@ function Login() {
 
   const logIn = async (values: any) => {
     await axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Auth`, values)
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Auth/Login`, values)
       .then(async (resp) => {
         localStorage.setItem("token", resp.data.token.accessToken);
         localStorage.setItem("isFirstLogin", JSON.stringify(false));

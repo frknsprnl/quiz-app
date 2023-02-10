@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import UnauthenticatedRoute from "@/routes/UnauthenticatedRoute";
+import axios from "axios";
 
 function ForgotPassword() {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
@@ -18,8 +19,8 @@ function ForgotPassword() {
       email: "",
     },
     validateOnChange: validateAfterSubmit,
-    onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      await sendMail(values);
       resetForm();
     },
     validationSchema: Yup.object({
@@ -28,6 +29,20 @@ function ForgotPassword() {
         .required("Email is required."),
     }),
   });
+
+  const sendMail = async (values: any) => {
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/Auth/PasswordResetMail?email=${values.email}`
+      )
+      .then((resp) => {
+        console.log(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <UnauthenticatedRoute>
       <Head>

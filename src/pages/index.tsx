@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "@/components/Header";
 import Blob from "../assets/blob";
@@ -6,12 +7,39 @@ import Image from "next/image";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import QuizCard from "@/components/QuizCard/QuizCard";
+import axios from "axios";
 
 export default function Home() {
   function handleScroll(screenId: any) {
     const element: any = document.getElementById(screenId);
     element.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  interface Quiz {
+    createdDate: Date;
+    description: string;
+    id: string;
+    questions: [];
+    title: string;
+    userId: string;
+  }
+
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+
+  const getQuizzes = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quizzes/getall`)
+      .then((resp) => {
+        setQuizzes(resp.data.quizzes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getQuizzes();
+  }, []);
 
   return (
     <>
@@ -43,6 +71,7 @@ export default function Home() {
               src={TestImg}
               alt="test image"
               className="absolute h-96 lg:h-[36rem] w-96 lg:w-[36rem] m-auto left-0 right-0"
+              priority={true}
             />
           </div>
         </div>
@@ -60,9 +89,9 @@ export default function Home() {
               Popular Quizzes
             </h1>
             <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
-              <QuizCard category="Math" name="Quiz Name" />
-              <QuizCard category="Math" name="Quiz Name" />
-              <QuizCard category="Math" name="Quiz Name" />
+              {quizzes.map((quiz) => (
+                <QuizCard category="Math" name={quiz.title} key={quiz.id} />
+              ))}
             </div>
           </div>
           <div className="">

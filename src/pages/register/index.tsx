@@ -32,7 +32,8 @@ function Register() {
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string()
-        .min(8, "Password must be at least 8 characters long")
+        .min(6, "Password must be at least 6 characters long")
+        .max(50, "Password must be 50 characters or fewer")
         .required("Password is required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -50,10 +51,7 @@ function Register() {
 
   const signUp = async (values: any) => {
     await axios
-      .post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/Users/Create`,
-        values
-      )
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Users/Create`, values)
       .then((resp) => {
         console.log(resp.data);
       })

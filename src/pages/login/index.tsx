@@ -41,7 +41,8 @@ function Login() {
         .required("Email is required."),
       password: Yup.string()
         .required("Password is required.")
-        .min(8, "Password is too short - should be 8 chars minimum."),
+        .min(6, "Password must be at least 6 characters long")
+        .max(50, "Password must be 50 characters or fewer")
     }),
     onSubmit: async (values) => {
       await logIn(values);

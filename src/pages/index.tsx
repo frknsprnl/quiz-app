@@ -8,6 +8,7 @@ import { AiOutlineArrowDown } from "react-icons/ai";
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import QuizCard from "@/components/QuizCard/QuizCard";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Home() {
   function handleScroll(screenId: any) {
@@ -90,7 +91,9 @@ export default function Home() {
             </h1>
             <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
               {quizzes.map((quiz) => (
-                <QuizCard category="Math" name={quiz.title} key={quiz.id} />
+                <Link href={`/quizzes/${quiz.id}`} key={quiz.id}>
+                  <QuizCard category="Math" name={quiz.title} />
+                </Link>
               ))}
             </div>
           </div>

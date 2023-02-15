@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Head from "next/head";
 import Header from "@/components/Header";
 import { MdOutlineLeaderboard } from "react-icons/md";
@@ -15,6 +15,7 @@ type UserLayoutProps = {
 };
 
 function UserLayout({ children }: UserLayoutProps) {
+
   useEffect(() => {
     const { pathname } = Router;
 
@@ -55,13 +56,56 @@ function UserLayout({ children }: UserLayoutProps) {
               <MdOutlineHeadsetMic size={36} />
               <span className="text-lg hidden lg:flex">Contact</span>
             </Link>
-            <Link
-              href={"/user/editprofile"}
-              className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mb-auto w-full hover:bg-slate-700 rounded-xl"
+            <button
+              className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-0 lg:gap-3 py-2 mx-auto md:mb-auto w-full hover:bg-slate-700 rounded-xl"
+              id="dropdown-parent"
+              onClick={(e) => {
+                const dropdown = document.getElementById("dropdown");
+                const dropdownParent = e.currentTarget;
+                
+                if (dropdown?.classList.contains("hidden")) {
+                  dropdown?.classList.remove("hidden");
+                  dropdownParent?.classList.add("bg-slate-700");
+                } else {
+                  dropdown?.classList.add("hidden");
+                  dropdownParent?.classList.remove("bg-slate-700");
+                }
+              }}
             >
               <MdOutlineEdit size={36} />
-              <span className="text-lg hidden lg:flex">Edit Profile</span>
-            </Link>
+              <div className="relative">
+                <span className="text-lg hidden lg:flex">Edit Profile</span>
+                <div
+                  className="absolute -top-36 -right-20 md:left-6 md:-top-8 lg:-top-5 lg:left-40 mt-2 w-48 h-auto rounded shadow-md hidden z-40"
+                  id="dropdown"
+                >
+                  <Link href={"/user/edit/password"}
+                    className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mb-auto w-full bg-[#16161a] hover:bg-slate-700 rounded-xl text-lg z-40"
+                    onClick={(e) => {
+                      e.currentTarget
+                        ? ""
+                        : document
+                            .getElementById("dropdown")
+                            ?.classList.add("hidden");
+                    }}
+                  >
+                    Password
+                  </Link>
+                  <Link href={"/user/edit/email"}
+                    className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mb-auto w-full bg-[#16161a] hover:bg-slate-700 rounded-xl text-lg z-40"
+                    onClick={(e) => {
+                      e.currentTarget
+                        ? ""
+                        : document
+                            .getElementById("dropdown")
+                            ?.classList.add("hidden");
+                    }}
+                  >
+                    Email
+                  </Link>
+                </div>
+              </div>
+            </button>
             <Link
               href="/user/profile"
               className="flex px-0 justify-center lg:justify-start lg:px-8 items-center gap-3 py-2 md:pb-8 w-full mt-auto group"
@@ -76,7 +120,7 @@ function UserLayout({ children }: UserLayoutProps) {
               </span>
             </Link>
           </div>
-          <div className="md:p-4 lg:p-10 w-full">{children}</div>
+          <div className="md:p-6 lg:p-10 w-full">{children}</div>
         </div>
       </main>
     </AuthenticatedRoute>

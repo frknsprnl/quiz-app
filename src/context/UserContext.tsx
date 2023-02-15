@@ -18,13 +18,12 @@ const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-        setIsAuthenticated(true)
+    if (localStorage.getItem("token")) {
+      setIsAuthenticated(true);
     } else {
-        setIsAuthenticated(false)
+      setIsAuthenticated(false);
     }
-  }, [])
-  
+  }, []);
 
   const login = () => {
     setIsAuthenticated(true);

@@ -5,26 +5,59 @@ import Button from "@/components/Button/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import axios from "axios";
+import toast from 'react-hot-toast'
 
 function EditPassword() {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
 
+  const updatePassword = async (passwords: object, token: string | null) => {
+    await axios
+      .put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/updatepassword`,
+        passwords,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((resp) => {
+        toast.success(resp.data.message);
+      })
+      .catch((err) => {
+        const errData = err.response.data;
+        if (errData.error === "Identity Error") {
+          toast.error(errData.errors.PasswordMismatch)
+        }
+      });
+  };
+
   const formik = useFormik({
     initialValues: {
-      password: "",
-      confirmPassword: "",
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     },
     validateOnChange: validateAfterSubmit,
     validationSchema: Yup.object({
-      password: Yup.string()
+      oldPassword: Yup.string()
         .min(6, "Password must be at least 6 characters long")
         .max(50, "Password must be 50 characters or fewer")
         .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
+      newPassword: Yup.string()
+        .min(6, "Password must be at least 6 characters long")
+        .max(50, "Password must be 50 characters or fewer")
+        .required("Password is required"),
+      confirmNewPassword: Yup.string()
+        .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
         .required("Confirm password is required"),
     }),
     onSubmit: (values, { resetForm }) => {
+      const pwValues = {
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+      };
+      const token = localStorage.getItem("token");
+      updatePassword(pwValues, token);
       resetForm();
     },
   });
@@ -34,28 +67,40 @@ function EditPassword() {
         <div className="flex flex-col gap-3 items-center w-80 py-5">
           <h1 className="text-2xl text-center">Update Password</h1>
           <Input
-            label="Password"
-            name="password"
+            label="Old Password"
+            name="oldPassword"
             type="password"
             placeholder="Must have at least 6 characters"
-            value={formik.values.password}
+            value={formik.values.oldPassword}
             onChange={formik.handleChange}
-            error={<ErrorMessage error={formik.errors.password} />}
+            error={<ErrorMessage error={formik.errors.oldPassword} />}
           />
           <Input
-            label="Confirm Password"
+            label="New Password"
+            name="newPassword"
             type="password"
-            name="confirmPassword"
-            placeholder="Must match password"
-            value={formik.values.confirmPassword}
+            placeholder="Must have at least 6 characters"
+            value={formik.values.newPassword}
             onChange={formik.handleChange}
-            error={<ErrorMessage error={formik.errors.confirmPassword} />}
+            error={<ErrorMessage error={formik.errors.newPassword} />}
+          />
+          <Input
+            label="Confirm New Password"
+            type="password"
+            name="confirmNewPassword"
+            placeholder="Must match password"
+            value={formik.values.confirmNewPassword}
+            onChange={formik.handleChange}
+            error={<ErrorMessage error={formik.errors.confirmNewPassword} />}
           />
           <Button
             name="Update"
             color="#107eeb"
             type="submit"
-            onClick={formik.handleSubmit}
+            onClick={() => {
+              formik.handleSubmit();
+              setValidateAfterSubmit(true);
+            }}
           />
         </div>
       </div>

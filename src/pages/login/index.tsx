@@ -12,6 +12,7 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import axios from "axios";
 import { useAuth } from "@/context/UserContext";
 import UnauthenticatedRoute from "@/routes/UnauthenticatedRoute";
+import toast from 'react-hot-toast'
 
 function Login() {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
@@ -42,7 +43,7 @@ function Login() {
       password: Yup.string()
         .required("Password is required.")
         .min(6, "Password must be at least 6 characters long")
-        .max(50, "Password must be 50 characters or fewer")
+        .max(50, "Password must be 50 characters or fewer"),
     }),
     onSubmit: async (values) => {
       await logIn(values);
@@ -56,6 +57,7 @@ function Login() {
         localStorage.setItem("token", resp.data.token.accessToken);
         localStorage.setItem("isFirstLogin", JSON.stringify(false));
         login();
+        toast.success("You've logged in.")
       })
       .catch((err) => {
         const errResp = err.response.data;
@@ -63,6 +65,8 @@ function Login() {
           setErrorAfterSubmit({ email: errResp.error, password: "" });
         } else if (errResp.status === 401) {
           setErrorAfterSubmit({ email: "", password: errResp.error });
+        } else {
+          console.log(err);
         }
 
         setValidateAfterSubmit(false);

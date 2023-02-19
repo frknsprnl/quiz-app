@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { useAuth } from "@/context/UserContext";
 import { useRouter } from "next/router";
+import toast from 'react-hot-toast'
 
 function Header() {
   const { isAuthenticated, logout } = useAuth();
@@ -58,6 +59,7 @@ function Header() {
             onClick={async () => {
               logout();
               await router.push("/");
+              toast.success("You've been logged out.")
             }}
             className="ml-auto text-xl text-[#fffafa] hover:text-gray-300"
           >

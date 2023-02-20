@@ -5,7 +5,7 @@ function TextArea(props: any) {
     <div className="flex flex-col w-full">
       {props.label && (
         <label
-          className={`text-sm md:text-base ${props.error ? "" : "pb-1.5"} px-2`}
+          className={`text-sm md:text-base ${props.error ? "" : "pb-1.5"} px-2 text-white`}
           htmlFor={props.name}
         >
           {props.label}

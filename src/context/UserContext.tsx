@@ -18,7 +18,9 @@ const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    const token = localStorage.getItem('token');
+
+    if (token) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);

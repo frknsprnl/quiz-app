@@ -2,58 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #16161a;
-    --primaryDarker: #12161b;
-    --secondary: #107eeb;
-    --tertiary: #4fd1c5;
-    --gray: #848fb6;
-  }
+:root {
+  --primary: #16161a;
+  --primaryDarker: #12161b;
+  --secondary: #107eeb;
+  --tertiary: #4fd1c5;
+  --gray: #848fb6;
+}
 
-  html {
-    color-scheme: dark;
-    background-color: var(--primary);
-  }
+html {
+  background-color: var(--primary);
+}
 
-  /* width */
-  ::-webkit-scrollbar {
-    width: 8px;
-    border-radius: 999px;
-  }
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 999px;
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 999px;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #e6e6e6;
-    border-radius: 999px;
-  }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e6e6e6;
+  border-radius: 999px;
+}
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-  ::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
 
-  h1 {
-    color: #fffffe;
-  }
+h1 {
+  color: #fffffe;
+}
 
-  button {
-    color: #fffffe;
-  }
+button {
+  color: #fffffe;
+}
 
-  p {
-    color: #94a1b2;
-  }
+p {
+  color: #94a1b2;
+}
+
+span {
+  color: #fffffe;
 }
 
 * {
@@ -69,7 +70,7 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #fffffe;
   text-decoration: none;
 }
 

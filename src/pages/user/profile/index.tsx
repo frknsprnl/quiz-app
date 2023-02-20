@@ -60,7 +60,9 @@ function Profile() {
               <span className="text-gray-500 mx-auto md:m-0 text-base md:text-lg">
                 Lv. 26
               </span>
-              <div className="mx-auto text-gray-400">{user.biography}</div>
+              <div className="mx-auto text-gray-400 text-sm md:text-base py-4 md:py-2">
+                {user.biography}
+              </div>
               <span className="text-gray-500 ml-auto text-sm md:text-base mb-2">
                 90.000/100.000 XP
               </span>
@@ -69,7 +71,7 @@ function Profile() {
             <div className="flex justify-center mt-8 gap-x-2 md:gap-x-10">
               <div className="flex">
                 <div className="p-3 md:p-4 shadow-md mr-1 md:mr-4 rounded-xl mb-auto">
-                  <MdStar className="text-lg md:text-2xl lg:text-4xl" />
+                  <MdStar className="text-white text-lg md:text-2xl lg:text-4xl" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-lg md:text-2xl"> {user.score} </span>

@@ -15,7 +15,6 @@ type UserLayoutProps = {
 };
 
 function UserLayout({ children }: UserLayoutProps) {
-
   useEffect(() => {
     const { pathname } = Router;
 
@@ -46,14 +45,14 @@ function UserLayout({ children }: UserLayoutProps) {
               href={"/user/leaderboard"}
               className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mt-auto w-full hover:bg-slate-700 rounded-xl"
             >
-              <MdOutlineLeaderboard size={36} />
+              <MdOutlineLeaderboard size={36} className="text-white" />
               <span className="text-lg hidden lg:flex">Leaderboard</span>
             </Link>
             <Link
               href={"/user/contact"}
               className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto w-full hover:bg-slate-700 rounded-xl"
             >
-              <MdOutlineHeadsetMic size={36} />
+              <MdOutlineHeadsetMic size={36} className="text-white" />
               <span className="text-lg hidden lg:flex">Contact</span>
             </Link>
             <button
@@ -62,7 +61,7 @@ function UserLayout({ children }: UserLayoutProps) {
               onClick={(e) => {
                 const dropdown = document.getElementById("dropdown");
                 const dropdownParent = e.currentTarget;
-                
+
                 if (dropdown?.classList.contains("hidden")) {
                   dropdown?.classList.remove("hidden");
                   dropdownParent?.classList.add("bg-slate-700");
@@ -72,14 +71,15 @@ function UserLayout({ children }: UserLayoutProps) {
                 }
               }}
             >
-              <MdOutlineEdit size={36} />
+              <MdOutlineEdit size={36} className="text-white" />
               <div className="relative">
-                <span className="text-lg hidden lg:flex">Edit Profile</span>
+                <span className="text-lg hidden lg:flex">Edit</span>
                 <div
                   className="absolute -top-36 -right-20 md:left-6 md:-top-8 lg:-top-5 lg:left-40 mt-2 w-48 h-auto rounded shadow-md hidden z-40"
                   id="dropdown"
                 >
-                  <Link href={"/user/edit/password"}
+                  <Link
+                    href={"/user/edit/password"}
                     className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mb-auto w-full bg-[#16161a] hover:bg-slate-700 rounded-xl text-lg z-40"
                     onClick={(e) => {
                       e.currentTarget
@@ -91,7 +91,8 @@ function UserLayout({ children }: UserLayoutProps) {
                   >
                     Password
                   </Link>
-                  <Link href={"/user/edit/email"}
+                  <Link
+                    href={"/user/edit/profile"}
                     className="flex px-0 justify-center lg:justify-start lg:px-10 items-center gap-3 py-2 mx-auto md:mb-auto w-full bg-[#16161a] hover:bg-slate-700 rounded-xl text-lg z-40"
                     onClick={(e) => {
                       e.currentTarget
@@ -101,7 +102,7 @@ function UserLayout({ children }: UserLayoutProps) {
                             ?.classList.add("hidden");
                     }}
                   >
-                    Email
+                    Profile
                   </Link>
                 </div>
               </div>

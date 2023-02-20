@@ -6,7 +6,7 @@ function Input(props: any) {
       <div className="flex flex-col">
         { props.label &&
           <label
-            className="text-sm md:text-base px-2"
+            className="text-sm md:text-base px-2 text-white"
             htmlFor={props.name}
           >
             {props.label}

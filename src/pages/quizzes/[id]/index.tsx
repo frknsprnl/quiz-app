@@ -6,19 +6,47 @@ import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/router";
 import Quiz from "@/components/Quiz/Quiz";
+import axios from "axios";
 
 function QuizLanding() {
   const router = useRouter();
-  const questionId = router.query["id"];
+  const quizId = router.query["id"];
   let questionNo = router.query["question"];
+
+  interface Quiz {
+    categoryName: string;
+    createdDate: Date;
+    description: string;
+    id: string;
+    questions: [];
+    title: string;
+  }
+  const [quiz, setQuiz] = useState<Quiz>();
 
   const handleClick = (e: any, questionNo: any) => {
     e.preventDefault();
-    router.push(`/quizzes/${questionId}?question=${questionNo}`);
+    router.push(`/quizzes/${quizId}?question=${questionNo}`);
+  };
+
+  const getQuizDetails = async (quizId: string | string[] | undefined) => {
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/quizzes/getquizdetails?id=${quizId}`
+      )
+      .then((resp) => {
+        setQuiz(resp.data.quiz);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    console.log(questionNo);
+    getQuizDetails(quizId);
+  }, [quizId]);
+
+  useEffect(() => {
+    if (questionNo) console.log(questionNo);
   }, [questionNo]);
 
   return (
@@ -38,9 +66,22 @@ function QuizLanding() {
           {!questionNo && (
             <>
               <div className="flex flex-col flex-1 justify-center items-center md:order-1 order-2">
-                <h1 className="py-2 text-3xl">32</h1>
+                <h1 className="absolute top-32 left-20 text-3xl">
+                  Category:
+                  <span className="text-gray-500"> {quiz?.categoryName} </span>
+                </h1>
+                <h1 className="absolute bottom-10 right-20 text-xl">
+                  Created at:
+                  <span className="text-gray-500">
+                    {" "}
+                    {quiz?.createdDate
+                      ? new Date(quiz.createdDate).toLocaleDateString()
+                      : ""}
+                  </span>
+                </h1>
+                <h1 className="py-2 text-3xl">{quiz?.title}</h1>
                 <span className="py-5 text-lg w-full md:w-96 text-[#94a1b2] text-center">
-                  31
+                  {quiz?.description}
                 </span>
                 <div className="w-64 md:w-80 py-5">
                   <Button

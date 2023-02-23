@@ -3,8 +3,9 @@ import UserLayout from "..";
 import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import Image from "next/image";
 import ProfileImg from "@/assets/profile.png";
-import { MdStar } from "react-icons/md";
+import { MdStar, MdUpload } from "react-icons/md";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Profile() {
   interface User {
@@ -13,6 +14,7 @@ function Profile() {
     lastName: string;
     score: number;
     userName: string;
+    profilePictureUrl: string;
   }
 
   const [user, setUser] = useState<User>({
@@ -21,6 +23,7 @@ function Profile() {
     lastName: "",
     score: 0,
     userName: "",
+    profilePictureUrl: "",
   });
 
   const getUserProfile = async (token: string | null) => {
@@ -36,6 +39,30 @@ function Profile() {
       });
   };
 
+  const uploadImage = async (image: File | null, token: string | null) => {
+    await axios
+      .post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/uploadprofilepicture`,
+        { image: image },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data; boundary=----MyBoundary5678",
+          },
+        }
+      )
+      .then(async (resp) => {
+        toast.success(resp.data.message);
+        const token = localStorage.getItem("token");
+        if (token) {
+          await getUserProfile(token);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     getUserProfile(token);
@@ -45,12 +72,36 @@ function Profile() {
     <UserLayout>
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row">
-          <div className="px-4 md:px-0 mx-auto md:m-0">
+          <div className="relative mx-auto md:m-0 h-32 md:h-52 w-32 md:w-52 group">
             <Image
-              src={ProfileImg}
+              src={user.profilePictureUrl || ProfileImg}
+              width={1920}
+              height={1080}
               alt="profile image"
-              className="h-32 md:h-52 w-32 md:w-52 rounded-full border-2 border-gray-700"
+              className="h-32 md:h-52 w-32 md:w-52  object-cover rounded-full border-2 border-gray-700"
             />
+            <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 overflow-hidden">
+              <div
+                className="h-24 md:h-32 w-24 md:w-32 flex justify-center items-center bg-gray-700 opacity-0 rounded-full group-hover:opacity-80 duration-1000 cursor-pointer"
+                onClick={() => {
+                  const imageInput = document.getElementById("imageInput");
+                  imageInput?.click();
+                }}
+              >
+                <input
+                  type="file"
+                  id="imageInput"
+                  hidden
+                  onChange={async (e) => {
+                    const token = localStorage.getItem("token");
+                    if (e.target.files) {
+                      await uploadImage(e.target.files[0], token);
+                    }
+                  }}
+                />
+                <MdUpload className="text-white text-lg md:text-2xl lg:text-4xl" />
+              </div>
+            </div>
           </div>
           <div className="flex flex-col mx-auto px-4 lg:px-8 w-full lg:w-3/4">
             <div className="flex flex-col pt-2">

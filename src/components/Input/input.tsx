@@ -4,14 +4,16 @@ function Input(props: any) {
   return (
     <>
       <div className="flex flex-col">
-        { props.label &&
+        {props.label && (
           <label
-            className="text-sm md:text-base px-2 text-white"
+            className={`text-sm md:text-base ${
+              props.error ? "" : "pb-1.5"
+            } px-2 text-white`}
             htmlFor={props.name}
           >
             {props.label}
           </label>
-        }
+        )}
         {props.error ? props.error : null}
         <input
           type="text"

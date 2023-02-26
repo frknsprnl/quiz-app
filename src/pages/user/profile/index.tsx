@@ -6,6 +6,7 @@ import ProfileImg from "@/assets/profile.png";
 import { MdStar, MdUpload } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "@/context/UserContext";
 
 function Profile() {
   interface User {
@@ -16,6 +17,8 @@ function Profile() {
     userName: string;
     profilePictureUrl: string;
   }
+
+  const { logout } = useAuth();
 
   const [user, setUser] = useState<User>({
     biography: "",
@@ -35,6 +38,7 @@ function Profile() {
         setUser(resp.data);
       })
       .catch((err) => {
+        logout();
         console.log(err);
       });
   };
@@ -47,7 +51,7 @@ function Profile() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data; boundary=----MyBoundary5678",
+            "Content-Type": "multipart/form-data",
           },
         }
       )
@@ -66,6 +70,7 @@ function Profile() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     getUserProfile(token);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

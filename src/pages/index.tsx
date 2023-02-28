@@ -68,9 +68,10 @@ export default function Home() {
     getCategories();
   }, []);
 
-  const scrollRef: any = useRef(null);
+  const scrollCategoryRef: any = useRef(null);
+  const scrollQuizRef: any = useRef(null);
 
-  const handleXScroll = (scrollOffset: number) => {
+  const handleXScroll = (scrollRef: any, scrollOffset: number) => {
     if (scrollRef.current !== null) {
       scrollRef.current.scrollTo({
         left: scrollRef.current.scrollLeft + scrollOffset,
@@ -132,19 +133,44 @@ export default function Home() {
         </div>
         <div className="min-h-screen pt-6 md:pt-8">
           <div>
-            <h1 className="text-3xl md:text-4xl py-4 md:py-8">
+            <h1 className="text-3xl md:text-4xl py-4 md:py-6">
               Popular Quizzes
             </h1>
-            <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
-              {quizzes.map((quiz) => (
-                <Link
-                  href={`/quizzes/${quiz.quizId}`}
-                  key={quiz.quizId}
-                  className="group"
+            <div className="flex justify-center items-center md:items-center w-full relative">
+              <div
+                className="flex space-x-6 pt-2 pb-6 overflow-x-hidden"
+                ref={scrollQuizRef}
+              >
+                {quizzes.map((quiz) => (
+                  <Link
+                    href={`/quizzes/${quiz.quizId}`}
+                    key={quiz.quizId}
+                    className="group"
+                  >
+                    <QuizCard category={quiz.categoryName} name={quiz.title} />
+                  </Link>
+                ))}
+              </div>
+              <div className="absolute left-0">
+                <button
+                  className="rounded-xl px-4 py-16 opacity-70"
+                  onClick={() => {
+                    handleXScroll(scrollQuizRef,-360);
+                  }}
                 >
-                  <QuizCard category={quiz.categoryName} name={quiz.title} />
-                </Link>
-              ))}
+                  <MdArrowBackIos size={24} />
+                </button>
+              </div>
+              <div className="absolute right-0">
+                <button
+                  className="rounded-xl px-4 py-16 opacity-70"
+                  onClick={() => {
+                    handleXScroll(scrollQuizRef,360);
+                  }}
+                >
+                  <MdArrowForwardIos size={24} />
+                </button>
+              </div>
             </div>
           </div>
           <div className="">
@@ -152,9 +178,8 @@ export default function Home() {
             <div className="flex justify-center items-center md:items-center w-full relative">
               <div
                 className="flex space-x-6 pt-2 pb-6 overflow-x-hidden"
-                ref={scrollRef}
+                ref={scrollCategoryRef}
               >
-                
                 {categories.map((category) => (
                   <CategoryCard
                     name={category.categoryName}
@@ -166,7 +191,7 @@ export default function Home() {
                 <button
                   className="rounded-xl px-4 py-16 opacity-70"
                   onClick={() => {
-                    handleXScroll(-360);
+                    handleXScroll(scrollCategoryRef, -360);
                   }}
                 >
                   <MdArrowBackIos size={24} />
@@ -176,7 +201,7 @@ export default function Home() {
                 <button
                   className="rounded-xl px-4 py-16 opacity-70"
                   onClick={() => {
-                    handleXScroll(360);
+                    handleXScroll(scrollCategoryRef, 360);
                   }}
                 >
                   <MdArrowForwardIos size={24} />

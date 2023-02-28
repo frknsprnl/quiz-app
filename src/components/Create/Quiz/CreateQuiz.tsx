@@ -7,7 +7,8 @@ import { useFormik } from "formik";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import axios from "axios";
 import * as Yup from "yup";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 function Quiz({ ...props }) {
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
@@ -19,7 +20,15 @@ function Quiz({ ...props }) {
 
   const [categories, setCategories] = useState<Category[]>();
 
-  const { setStep } = props;
+  const { setStep, setQuizId } = props;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.quizId) {
+      setQuizId(router.query.quizId);
+      setStep(2);
+    }
+  }, [router, setQuizId, setStep]);
 
   const formik = useFormik({
     initialValues: {
@@ -33,12 +42,11 @@ function Quiz({ ...props }) {
       description: Yup.string().required("Description is required"),
       categoryId: Yup.string().required("Category is required"),
     }),
-    onSubmit: async (values: any, { resetForm }) => {
+    onSubmit: async (values: any) => {
       const token = localStorage.getItem("token");
       if (token) {
         createquiz(values, token);
       }
-      resetForm();
     },
   });
 
@@ -49,6 +57,7 @@ function Quiz({ ...props }) {
       })
       .then((resp) => {
         toast.success(resp.data.message);
+        setQuizId(resp.data.quizId);
         setStep(2);
       })
       .catch((err) => {
@@ -82,7 +91,7 @@ function Quiz({ ...props }) {
             Category
           </label>
           <span className="text-sm text-red-500 pb-1.5 px-2">
-          {/* @ts-ignore:next-line */}
+            {/* @ts-ignore:next-line */}
             {formik.errors.categoryId}
           </span>
 
@@ -124,7 +133,14 @@ function Quiz({ ...props }) {
         />
       </div>
       <div className="w-56 mx-auto">
-        <Button name="Next" color="#7f5af0" type="submit" />
+        <Button
+          name="Next"
+          color="#7f5af0"
+          type="submit"
+          onClick={() => {
+            setValidateAfterSubmit(true);
+          }}
+        />
       </div>
     </form>
   );

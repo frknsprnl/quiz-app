@@ -1,5 +1,4 @@
 import React from "react";
-import { MdPlayArrow } from "react-icons/md";
 import CategoryBG from "@/assets/card-bg.svg";
 
 const QuizCard: React.FC<{
@@ -8,14 +7,14 @@ const QuizCard: React.FC<{
 }> = ({ name, category }) => {
   return (
     <div
-      className="h-40 w-full md:w-96 p-5 bg-white rounded-xl flex flex-col group"
+      className="h-36 w-52 md:w-80 rounded-3xl pt-4 px-4 flex justify-center items-center flex-col flex-shrink-0"
       style={{
         background: `url('${CategoryBG.src}') no-repeat`,
         backgroundSize: "cover",
       }}
     >
-      <h1 className="text-2xl md:text-4xl">{category}</h1>
-      <h1 className="text-lg md:text-2xl mt-4 text-center">{name}</h1>
+      <h1 className="text-2xl md:text-3xl flex-1 text-center">{category}</h1>
+      <h1 className="text-lg mt-4 flex-1 text-center">{name}</h1>
     </div>
   );
 };

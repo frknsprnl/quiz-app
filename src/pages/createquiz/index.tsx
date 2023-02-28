@@ -4,20 +4,18 @@ import Header from "@/components/Header";
 import { MdQuiz, MdRule } from "react-icons/md";
 import { RxQuestionMark } from "react-icons/rx";
 import Quiz from "@/components/Create/Quiz/CreateQuiz";
+import Questions from "@/components/Create/Questions/CreateQuestions";
+import Options from "@/components/Create/Options/CreateOptions";
+import AuthenticatedRoute from "@/routes/AuthenticatedRoute";
 
 function CreateQuiz() {
   const [step, setStep] = useState(1);
-
-  useEffect(() => {
-    if (step > 3) {
-      setStep(3);
-    } else if (step < 1) {
-      setStep(1);
-    }
-  }, [step]);
+  const [quizId, setQuizId] = useState("");
+  const [questionId, setQuestionId] = useState("");
+  const [questionCount, setQuestionCount] = useState(1);
 
   return (
-    <>
+    <AuthenticatedRoute>
       <Head>
         <title>Create Quiz | QuizApp</title>
         <meta
@@ -67,10 +65,22 @@ function CreateQuiz() {
               </span>
             </li>
           </ol>
-          {step === 1 && <Quiz setStep={setStep} />}
+          {step === 1 && (
+            <Quiz setStep={setStep} setQuizId={setQuizId} />
+          )}
+          {step === 2 && (
+            <Questions
+              quizId={quizId}
+              questionCount={questionCount}
+              setQuestionCount={setQuestionCount}
+              setStep={setStep}
+              setQuestionId={setQuestionId}
+            />
+          )}
+          {step === 3 && <Options setStep={setStep} questionId={questionId} />}
         </div>
       </main>
-    </>
+    </AuthenticatedRoute>
   );
 }
 

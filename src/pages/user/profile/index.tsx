@@ -9,39 +9,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/context/UserContext";
 
 function Profile() {
-  interface User {
-    biography: string;
-    firstName: string;
-    lastName: string;
-    score: number;
-    userName: string;
-    profilePictureUrl: string;
-  }
-
-  const { logout } = useAuth();
-
-  const [user, setUser] = useState<User>({
-    biography: "",
-    firstName: "",
-    lastName: "",
-    score: 0,
-    userName: "",
-    profilePictureUrl: "",
-  });
-
-  const getUserProfile = async (token: string | null) => {
-    await axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserprofile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((resp) => {
-        setUser(resp.data);
-      })
-      .catch((err) => {
-        logout();
-        console.log(err);
-      });
-  };
+  const { user, setUser, logout } = useAuth();
 
   const uploadImage = async (image: File | null, token: string | null) => {
     await axios
@@ -57,21 +25,11 @@ function Profile() {
       )
       .then(async (resp) => {
         toast.success(resp.data.message);
-        const token = localStorage.getItem("token");
-        if (token) {
-          await getUserProfile(token);
-        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    getUserProfile(token);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <UserLayout>
@@ -79,7 +37,8 @@ function Profile() {
         <div className="flex flex-col md:flex-row">
           <div className="relative mx-auto md:m-0 h-32 md:h-52 w-32 md:w-52 group">
             <Image
-              src={user.profilePictureUrl || ProfileImg}
+              src={user?.profilePictureUrl || ProfileImg}
+              priority={true}
               width={1920}
               height={1080}
               alt="profile image"
@@ -111,13 +70,13 @@ function Profile() {
           <div className="flex flex-col mx-auto px-4 lg:px-8 w-full lg:w-3/4">
             <div className="flex flex-col pt-2">
               <span className="text-2xl md:text-3xl font-semibold mx-auto md:m-0 py-1 md:py-0">
-                {user.userName}
+                {user?.userName}
               </span>
               <span className="text-gray-500 mx-auto md:m-0 text-base md:text-lg">
                 Lv. 26
               </span>
               <div className="mx-auto text-gray-400 text-sm md:text-base py-4 md:py-2">
-                {user.biography}
+                {user?.biography}
               </div>
               <span className="text-gray-500 ml-auto text-sm md:text-base mb-2">
                 90.000/100.000 XP
@@ -130,7 +89,7 @@ function Profile() {
                   <MdStar className="text-white text-lg md:text-2xl lg:text-4xl" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-lg md:text-2xl"> {user.score} </span>
+                  <span className="text-lg md:text-2xl"> {user?.score} </span>
                   <span className="text-sm md:text-xl text-gray-500">
                     Score
                   </span>

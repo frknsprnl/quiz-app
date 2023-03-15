@@ -123,7 +123,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="flex justify-center mt-4 md:mt-0" id="screen2">
+        <div className="flex justify-center mt-4 lg:mt-0" id="screen2">
           <button className="p-2 z-10" onClick={() => handleScroll("screen2")}>
             <AiOutlineArrowDown
               size={36}

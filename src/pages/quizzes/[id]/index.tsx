@@ -7,15 +7,20 @@ import Button from "@/components/Button/Button";
 import { useRouter } from "next/router";
 import Quiz from "@/components/Quiz/Quiz";
 import axios from "axios";
+import AuthenticatedRoute from "@/routes/AuthenticatedRoute";
 
 function QuizLanding() {
   const router = useRouter();
   const quizId = router.query["id"];
-  let questionNo = router.query["question"];
+  const [questionNo, setQuestionNo] = useState(router.query["question"]);
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    setQuestionNo(router.query["question"]);
+  }, [router]);
 
   interface Quiz {
     categoryName: string;
-    createdDate: Date;
     description: string;
     id: string;
     questions: [];
@@ -23,18 +28,23 @@ function QuizLanding() {
   }
   const [quiz, setQuiz] = useState<Quiz>();
 
-  const handleClick = (e: any, questionNo: any) => {
-    e.preventDefault();
+  const handleClick = (questionNo: any) => {
     router.push(`/quizzes/${quizId}?question=${questionNo}`);
   };
 
-  const getQuizDetails = async (quizId: string | string[] | undefined) => {
+  const startQuiz = async (
+    quizId: string | string[] | undefined,
+    token: string
+  ) => {
     await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/quizzes/getquizdetails?id=${quizId}`
+      .post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/quizzes/startquiz?quizId=${quizId}`,
+        "",
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((resp) => {
         setQuiz(resp.data.quiz);
+        setQuestions(resp.data.quiz.questions);
       })
       .catch((err) => {
         console.log(err);
@@ -42,15 +52,14 @@ function QuizLanding() {
   };
 
   useEffect(() => {
-    getQuizDetails(quizId);
-  }, [quizId]);
-
-  useEffect(() => {
-    if (questionNo) console.log(questionNo);
-  }, [questionNo]);
+    if (router.query["id"]) {
+      const token = localStorage.getItem("token");
+      if (token) startQuiz(quizId, token);
+    }
+  }, [quizId, router]);
 
   return (
-    <>
+    <AuthenticatedRoute>
       <Head>
         <title>Quiz | QuizApp</title>
         <meta
@@ -70,15 +79,6 @@ function QuizLanding() {
                   Category:
                   <span className="text-gray-500"> {quiz?.categoryName} </span>
                 </h1>
-                <h1 className="absolute bottom-10 right-20 text-xl">
-                  Created at:
-                  <span className="text-gray-500">
-                    {" "}
-                    {quiz?.createdDate
-                      ? new Date(quiz.createdDate).toLocaleDateString()
-                      : ""}
-                  </span>
-                </h1>
                 <h1 className="py-2 text-3xl">{quiz?.title}</h1>
                 <span className="py-5 text-lg w-full md:w-96 text-[#94a1b2] text-center">
                   {quiz?.description}
@@ -87,8 +87,12 @@ function QuizLanding() {
                   <Button
                     name="Start quiz"
                     color="#7f5af0"
-                    onClick={(e: any) => {
-                      handleClick(e, !questionNo ? 1 : Number(questionNo) + 1);
+                    onClick={() => {
+                      handleClick(!questionNo ? 1 : Number(questionNo) + 1);
+                      const token = localStorage.getItem("token");
+                      if (token) {
+                        startQuiz(quizId, token);
+                      }
                     }}
                   />
                 </div>
@@ -103,10 +107,18 @@ function QuizLanding() {
               </div>
             </>
           )}
-          {questionNo && <Quiz />}
+          {questionNo && (
+            <Quiz
+              questions={questions}
+              questionNo={questionNo}
+              setQuestionNo={setQuestionNo}
+              quiz={quiz}
+              quizId={quizId}
+            />
+          )}
         </div>
       </main>
-    </>
+    </AuthenticatedRoute>
   );
 }
 

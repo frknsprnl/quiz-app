@@ -69,9 +69,16 @@ function Profile() {
           </div>
           <div className="flex flex-col mx-auto px-4 lg:px-8 w-full lg:w-3/4">
             <div className="flex flex-col pt-2">
-              <span className="text-2xl md:text-3xl font-semibold mx-auto md:m-0 py-1 md:py-0">
-                {user?.userName}
-              </span>
+              <div className="flex">
+                <span className="text-2xl md:text-3xl font-semibold mx-auto md:m-0 py-1 md:py-0">
+                  {user?.firstName && user?.lastName
+                    ? `${user?.firstName} ${user?.lastName}`
+                    : user?.userName}
+                </span>
+                <span className="text-sm md:text-lg text-gray-700 mt-auto">
+                  &nbsp;@{user?.firstName && user?.lastName ? user?.userName : ""}
+                </span>
+              </div>
               <span className="text-gray-500 mx-auto md:m-0 text-base md:text-lg">
                 Lv. 26
               </span>

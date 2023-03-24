@@ -6,7 +6,6 @@ import AuthenticatedRoute from "@/routes/AuthenticatedRoute";
 import { useAuth } from "@/context/UserContext";
 import axios from "axios";
 import Sidebar from "@/components/SideBar/Sidebar";
-import { checkRefreshToken } from "@/services/auth";
 
 type UserLayoutProps = {
   children: React.ReactNode;
@@ -25,14 +24,7 @@ function UserLayout({ children }: UserLayoutProps) {
           setUser(resp.data);
         })
         .catch((err) => {
-          if (err.response.statusCode === 401) {
-            const token = localStorage.getItem("token");
-            if (token) {
-              checkRefreshToken(token);
-            }
-          } else {
-            logout();
-          }
+          logout();
         });
     };
 

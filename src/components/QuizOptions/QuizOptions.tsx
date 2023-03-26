@@ -5,7 +5,15 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 function QuizOptions(props: any) {
-  const { questions, options, questionNo, setQuestionNo, quizId, quiz } = props;
+  const {
+    questions,
+    options,
+    questionNo,
+    setQuestionNo,
+    quizId,
+    quiz,
+    setQuizResult,
+  } = props;
 
   const router = useRouter();
   interface Option {
@@ -110,7 +118,7 @@ function QuizOptions(props: any) {
   }, [selectedOption]);
 
   useEffect(() => {
-    console.log(answer);
+    // console.log(answer);
   }, [answer]);
 
   const finishQuiz = async (answer: any, token: string) => {
@@ -121,13 +129,7 @@ function QuizOptions(props: any) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((resp) => {
-        toast.success(
-          `Correct answer count: ${resp.data.quizResult.correctAnswerCount}`
-        );
-        toast(`Score: ${resp.data.quizResult.score}`, {
-          icon: "🚀",
-        });
-        console.log(resp.data);
+        setQuizResult(resp.data.quizResult)
       })
       .catch((err) => {
         console.log(err);

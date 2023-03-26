@@ -7,7 +7,7 @@ const QuizCard: React.FC<{
 }> = ({ name, category }) => {
   return (
     <div
-      className="h-36 w-52 md:w-80 rounded-3xl pt-4 px-4 flex justify-center items-center flex-col flex-shrink-0"
+      className="h-36 w-52 md:w-80 rounded-3xl pt-4 px-4 flex justify-center items-center flex-col flex-shrink-0 hover:scale-110 duration-500"
       style={{
         background: `url('${CategoryBG.src}') no-repeat`,
         backgroundSize: "cover",

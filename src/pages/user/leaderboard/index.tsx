@@ -3,6 +3,7 @@ import UserLayout from "..";
 import Image from "next/image";
 import CrownImg from "./assets/crown.png";
 import axios from "axios";
+import ProfileImg from "@/assets/profile.png";
 
 function Leaderboard() {
   interface Board {
@@ -17,7 +18,6 @@ function Leaderboard() {
     await axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getleaderboard`)
       .then((resp) => {
-        console.log(resp.data);
         setBoard(resp.data);
       })
       .catch((err) => {
@@ -44,7 +44,7 @@ function Leaderboard() {
             </div>
             <div className="h-24 w-24 md:h-28 md:w-28 border-2 rounded-full overflow-hidden">
               <Image
-                src={board[0]?.userPhotoUrl}
+                src={board[0]?.userPhotoUrl || ProfileImg}
                 width={1600}
                 height={1600}
                 priority={true}
@@ -65,7 +65,7 @@ function Leaderboard() {
             </div>
             <div className="h-20 w-20 md:h-24 md:w-24 border-2 rounded-full overflow-hidden">
               <Image
-                src={board[1]?.userPhotoUrl}
+                src={board[1]?.userPhotoUrl || ProfileImg}
                 width={1600}
                 height={1600}
                 priority={true}
@@ -86,7 +86,7 @@ function Leaderboard() {
             </div>
             <div className="h-16 w-16 md:h-20 md:w-20 border-2 rounded-full overflow-hidden ml-2.5 md:ml-0">
               <Image
-                src={board[2]?.userPhotoUrl}
+                src={board[2]?.userPhotoUrl || ProfileImg}
                 width={1600}
                 height={1600}
                 priority={true}
@@ -109,7 +109,7 @@ function Leaderboard() {
               <div className="h-16 flex items-center w-full rounded-full bg-slate-700">
                 <div className="h-16 w-16 rounded-full overflow-hidden">
                   <Image
-                    src={user?.userPhotoUrl}
+                    src={user?.userPhotoUrl || ProfileImg}
                     width={1600}
                     height={1600}
                     priority={true}

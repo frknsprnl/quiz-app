@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, Ref } from "react";
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Header from "@/components/Header";
 import Blob from "../assets/blob";
-import TestImg from "../assets/test.png";
+import TestImg from "../assets/main-test.svg";
 import Image from "next/image";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import CategoryCard from "@/components/CategoryCard/CategoryCard";

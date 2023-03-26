@@ -31,7 +31,8 @@ function Quiz(props: any) {
     questionNo,
     setQuestionNo,
     quizId,
-    quiz
+    quiz,
+    setQuizResult
   } = props;
 
   useEffect(() => {
@@ -68,6 +69,7 @@ function Quiz(props: any) {
           questions={questions}
           quiz={quiz}
           quizId={quizId}
+          setQuizResult={setQuizResult}
         />
       </div>
     </>

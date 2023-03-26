@@ -8,12 +8,14 @@ import { useRouter } from "next/router";
 import Quiz from "@/components/Quiz/Quiz";
 import axios from "axios";
 import AuthenticatedRoute from "@/routes/AuthenticatedRoute";
+import QuizResult from "@/components/QuizResult/QuizResult";
 
 function QuizLanding() {
   const router = useRouter();
   const quizId = router.query["id"];
   const [questionNo, setQuestionNo] = useState(router.query["question"]);
   const [questions, setQuestions] = useState([]);
+  const [quizResult, setQuizResult] = useState(null);
 
   useEffect(() => {
     setQuestionNo(router.query["question"]);
@@ -107,14 +109,18 @@ function QuizLanding() {
               </div>
             </>
           )}
-          {questionNo && (
+          {questionNo && !quizResult && (
             <Quiz
               questions={questions}
               questionNo={questionNo}
               setQuestionNo={setQuestionNo}
               quiz={quiz}
               quizId={quizId}
+              setQuizResult={setQuizResult}
             />
+          )}
+          {quizResult && (
+            <QuizResult questions={questions} quizResult={quizResult} />
           )}
         </div>
       </main>
